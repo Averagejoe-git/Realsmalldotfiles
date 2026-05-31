@@ -6,7 +6,7 @@
 
 set -e
 
-REPO="https://github.com/Averagejoe-git/dotfiles.git"
+REPO="https://github.com/Averagejoe-git/Realsmalldotfiles.git"
 DOTFILES_DIR="$HOME/dotfiles"
 DRY_RUN=false
 
