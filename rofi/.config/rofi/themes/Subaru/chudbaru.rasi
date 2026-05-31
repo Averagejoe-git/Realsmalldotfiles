@@ -1,0 +1,201 @@
+* {
+    bg-darkest:     #1B0F12ff;
+    bg-dark:        #291816ff;
+    bg-mid:         #3A2822ff;
+    bg-module:      #3C2C24ff;
+    bg-bar:         #3C2E2Cff;
+    bg-raised:      #4C3935ff;
+
+    accent-main:    #D4874Aff;
+    accent-muted:   #89563Eff;
+    accent-dim:     #866D5Fff;
+
+    text-bright:    #E8A055ff;
+    text-normal:    #D4874Aff;
+    text-dim:       #9A7A6Aff;
+    text-dark:      #1B0F12ff;
+
+    border-soft:    #3C2E2Cff;
+    border-mid:     #4C3935ff;
+    border-accent:  #89563Eff;
+
+    background-color:   transparent;
+    text-color:         @text-bright;
+}
+
+configuration {
+    modi:               "drun,run,filebrowser";
+    show-icons:         true;
+    icon-theme:         "Papirus-Dark";
+    display-drun:       "  Apps";
+    display-run:        "  Run";
+    display-filebrowser:"  Files";
+    drun-display-format:"{name}";
+    font:               "JetBrainsMono Nerd Font 11";
+}
+
+window {
+    width:              420px;
+    height:             540px;
+    location:           southwest;
+    anchor:             southwest;
+    x-offset:           6px;
+    y-offset:           -50px;
+    border:             1px;
+    border-color:       @border-accent;
+    border-radius:      8px 8px 0px 0px;
+    background-color:   @bg-darkest;
+    cursor:             "default";
+}
+
+mainbox {
+    background-color:   transparent;
+    children:           [ inputbar, message, listview, mode-switcher ];
+    spacing:            0px;
+    padding:            0px;
+}
+
+inputbar {
+    background-color:   @bg-mid;
+    text-color:         @text-bright;
+    padding:            10px 12px;
+    border-radius:      8px 8px 0px 0px;
+    border:             0px 0px 1px 0px;
+    border-color:       @border-accent;
+    children:           [ prompt, textbox-prompt-colon, entry ];
+    spacing:            8px;
+}
+
+prompt {
+    background-color:   transparent;
+    text-color:         @accent-main;
+    font:               "JetBrainsMono Nerd Font Bold 11";
+}
+
+textbox-prompt-colon {
+    background-color:   transparent;
+    text-color:         @accent-dim;
+    str:                "›";
+    margin:             0px 2px 0px 0px;
+}
+
+entry {
+    background-color:   transparent;
+    text-color:         @text-bright;
+    placeholder:        "Search apps...";
+    placeholder-color:  @text-dim;
+    cursor:             text;
+}
+
+listview {
+    background-color:   transparent;
+    padding:            6px 0px;
+    spacing:            0px;
+    lines:              9;
+    columns:            1;
+    scrollbar:          false;
+    border:             0px;
+    fixed-height:       true;
+}
+
+element {
+    background-color:   transparent;
+    text-color:         @text-dim;
+    padding:            8px 14px;
+    spacing:            10px;
+    border-radius:      0px;
+    orientation:        horizontal;
+    cursor:             pointer;
+}
+
+element normal normal {
+    background-color:   transparent;
+    text-color:         @text-dim;
+}
+
+element normal urgent {
+    background-color:   transparent;
+    text-color:         @accent-muted;
+}
+
+element normal active {
+    background-color:   @bg-dark;
+    text-color:         @text-normal;
+}
+
+element selected normal {
+    background-color:   @bg-raised;
+    text-color:         @text-bright;
+    border:             0px 0px 0px 3px;
+    border-color:       @accent-main;
+}
+
+element selected urgent {
+    background-color:   @accent-muted;
+    text-color:         @text-bright;
+}
+
+element selected active {
+    background-color:   @bg-raised;
+    text-color:         @text-bright;
+}
+
+element-icon {
+    background-color:   transparent;
+    size:               22px;
+    cursor:             inherit;
+}
+
+element-text {
+    background-color:   transparent;
+    text-color:         inherit;
+    highlight:          bold #D4874A;
+    cursor:             inherit;
+    vertical-align:     0.5;
+}
+
+mode-switcher {
+    background-color:   @bg-mid;
+    padding:            6px 8px;
+    spacing:            6px;
+    border:             1px 0px 0px 0px;
+    border-color:       @border-mid;
+}
+
+button {
+    background-color:   @bg-dark;
+    text-color:         @text-dim;
+    padding:            5px 12px;
+    border-radius:      4px;
+    border:             1px;
+    border-color:       @border-soft;
+    cursor:             pointer;
+}
+
+button selected {
+    background-color:   @accent-muted;
+    text-color:         @text-bright;
+    border-color:       @accent-main;
+}
+
+message {
+    background-color:   transparent;
+    padding:            0px;
+    border:             0px;
+}
+
+textbox {
+    background-color:   @bg-dark;
+    text-color:         @text-dim;
+    padding:            6px 12px;
+    border:             0px 0px 1px 0px;
+    border-color:       @border-soft;
+}
+
+scrollbar {
+    background-color:   @bg-dark;
+    handle-color:       @accent-muted;
+    handle-width:       4px;
+    border-radius:      2px;
+    width:              4px;
+}

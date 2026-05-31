@@ -1,0 +1,245 @@
+@define-color bg-darkest    #1B0F12;
+@define-color bg-dark       #291816;
+@define-color bg-mid        #3A2822;
+@define-color bg-module     #3C2C24;
+@define-color bg-bar        #3C2E2C;
+@define-color bg-raised     #4C3935;
+
+@define-color accent-main   #D4874A;
+@define-color accent-muted  #89563E;
+@define-color accent-dim    #866D5F;
+
+@define-color text-bright   #E8A055;
+@define-color text-normal   #D4874A;
+@define-color text-dim      #9A7A6A;
+@define-color text-dark     #1B0F12;
+
+@define-color border-soft   #3C2E2C;
+@define-color border-mid    #4C3935;
+@define-color border-accent #89563E;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", monospace;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: @bg-darkest;
+    color: @text-bright;
+    border-top: 2px solid @bg-bar;
+    border-radius: 0;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: transparent;
+}
+
+#workspaces {
+    background-color: transparent;
+    padding: 0 4px;
+}
+
+#workspaces button {
+    background-color: @bg-dark;
+    color: @text-dim;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-soft;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+    border-color: @accent-muted;
+}
+
+#workspaces button.active {
+    background-color: @accent-muted;
+    color: @text-bright;
+    border-color: @accent-main;
+}
+
+#workspaces button.urgent {
+    background-color: @accent-dim;
+    color: @text-dark;
+}
+
+#window {
+    background-color: transparent;
+    color: @text-dim;
+    padding: 0 8px;
+}
+
+#clock {
+    background-color: @bg-mid;
+    color: @text-bright;
+    padding: 0 12px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-mid;
+}
+
+#battery {
+    background-color: @bg-dark;
+    color: @text-bright;
+    padding: 0 10px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-soft;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @text-bright;
+    background-color: @bg-mid;
+}
+
+#battery.warning:not(.charging) {
+    color: @accent-main;
+    background-color: @bg-dark;
+}
+
+#battery.critical:not(.charging) {
+    color: @text-dark;
+    background-color: @accent-muted;
+    animation: blink 0.5s steps(12) infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: @accent-dim;
+        color: @text-dark;
+    }
+}
+
+#network {
+    background-color: @bg-dark;
+    color: @text-bright;
+    padding: 0 10px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-soft;
+}
+
+#network.disconnected {
+    color: @text-dim;
+    background-color: @bg-darkest;
+}
+
+#bluetooth {
+    background-color: @bg-dark;
+    color: @text-bright;
+    padding: 0 10px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-soft;
+}
+
+#bluetooth.disabled {
+    color: @text-dim;
+}
+
+#memory {
+    background-color: @bg-dark;
+    color: @text-bright;
+    padding: 0 10px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-soft;
+}
+
+#tray {
+    background-color: @bg-module;
+    padding: 0 8px;
+    border-radius: 4px;
+    margin: 4px 2px;
+    border: 1px solid @border-soft;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @accent-muted;
+}
+
+#custom-launcher {
+    background-color: @accent-muted;
+    color: @text-bright;
+    padding: 0 14px;
+    border-radius: 4px;
+    margin: 4px 4px 4px 6px;
+    font-size: 16px;
+    border: 1px solid @accent-main;
+}
+
+#custom-launcher:hover {
+    background-color: @accent-main;
+    color: @text-dark;
+}
+
+#custom-seperator {
+    color: @border-mid;
+    padding: 0 2px;
+    font-size: 15px;
+}
+
+#custom-notification {
+    background-color: @bg-dark;
+    color: @text-bright;
+    padding: 0 10px;
+    border-radius: 4px;
+    margin: 4px 6px 4px 2px;
+    border: 1px solid @border-soft;
+}
+
+#pulseaudio-slider {
+    padding: 0 6px;
+    min-width: 80px;
+}
+
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+
+#pulseaudio-slider trough {
+    min-height: 4px;
+    min-width: 60px;
+    border-radius: 2px;
+    background-color: @bg-bar;
+}
+
+#pulseaudio-slider highlight {
+    min-width: 4px;
+    border-radius: 2px;
+    background-color: @accent-muted;
+}
+
+tooltip {
+    background-color: @bg-darkest;
+    color: @text-bright;
+    border: 1px solid @border-soft;
+    border-radius: 4px;
+}
+
+tooltip label {
+    color: @text-bright;
+}

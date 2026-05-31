@@ -1,0 +1,649 @@
+/* Thunar-only GTK3 theme — place in ~/.config/gtk-3.0/gtk.css */
+
+@define-color bg-darkest    #1B0F12;
+@define-color bg-dark       #291816;
+@define-color bg-mid        #3A2822;
+@define-color bg-module     #3C2C24;
+@define-color bg-bar        #3C2E2C;
+@define-color bg-raised     #4C3935;
+
+@define-color accent-main   #D4874A;
+@define-color accent-muted  #89563E;
+@define-color accent-dim    #866D5F;
+
+@define-color text-bright   #E8A055;
+@define-color text-normal   #D4874A;
+@define-color text-dim      #9A7A6A;
+@define-color text-dark     #1B0F12;
+
+@define-color border-soft   #3C2E2C;
+@define-color border-mid    #4C3935;
+@define-color border-accent #89563E;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", monospace;
+    font-size: 13px;
+    color: @text-bright;
+    outline: none;
+    -gtk-icon-style: symbolic;
+}
+
+window,
+.background {
+    background-color: @bg-darkest;
+    color: @text-bright;
+}
+
+headerbar,
+.titlebar {
+    background-color: @bg-dark;
+    color: @text-bright;
+    border-bottom: 1px solid @border-mid;
+    padding: 4px 8px;
+    min-height: 36px;
+    box-shadow: none;
+}
+
+headerbar .title {
+    color: @text-bright;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+headerbar .subtitle {
+    color: @text-dim;
+    font-size: 11px;
+}
+
+headerbar button,
+.titlebar button {
+    background-color: @bg-mid;
+    color: @text-bright;
+    border: 1px solid @border-soft;
+    border-radius: 4px;
+    padding: 2px 8px;
+    min-height: 24px;
+    min-width: 24px;
+    transition: background-color 0.15s ease;
+    box-shadow: none;
+}
+
+headerbar button:hover,
+.titlebar button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+    border-color: @accent-muted;
+}
+
+headerbar button:active,
+.titlebar button:active {
+    background-color: @accent-muted;
+    color: @text-dark;
+}
+
+headerbar button.titlebutton {
+    background-color: transparent;
+    border: 1px solid @border-soft;
+    border-radius: 50%;
+    min-width: 14px;
+    min-height: 14px;
+    padding: 2px;
+}
+
+headerbar button.titlebutton:hover {
+    background-color: @accent-muted;
+    border-color: @accent-main;
+}
+
+.path-bar,
+ThunarLocationBar,
+.location-bar {
+    background-color: @bg-mid;
+    border-bottom: 1px solid @border-soft;
+    padding: 2px 4px;
+}
+
+.path-bar button,
+.location-bar button {
+    background-color: transparent;
+    color: @text-dim;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    min-height: 24px;
+}
+
+.path-bar button:hover,
+.location-bar button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+}
+
+.path-bar button:last-child,
+.location-bar button:last-child {
+    color: @accent-main;
+    font-weight: bold;
+}
+
+.path-bar entry,
+entry {
+    background-color: @bg-mid;
+    color: @text-bright;
+    border: 1px solid @border-mid;
+    border-radius: 4px;
+    padding: 2px 8px;
+    min-height: 24px;
+    caret-color: @accent-main;
+    selection-background-color: @accent-muted;
+    selection-color: @text-bright;
+    box-shadow: none;
+}
+
+entry:focus {
+    border-color: @accent-main;
+    background-color: @bg-dark;
+}
+
+entry image {
+    color: @text-dim;
+}
+
+.sidebar,
+.places-sidebar {
+    background-color: @bg-dark;
+    border-right: 1px solid @border-soft;
+    padding: 4px 0;
+}
+
+.sidebar row,
+.places-sidebar row {
+    padding: 2px 0;
+}
+
+.sidebar row label,
+.places-sidebar row label {
+    color: @text-dim;
+    padding: 0 4px;
+    font-size: 13px;
+}
+
+.sidebar row:hover,
+.places-sidebar row:hover {
+    background-color: @bg-mid;
+}
+
+.sidebar row:selected,
+.sidebar row.selected,
+.places-sidebar row:selected {
+    background-color: @accent-muted;
+    border-radius: 4px;
+}
+
+.sidebar row:selected label,
+.places-sidebar row:selected label {
+    color: @text-bright;
+    font-weight: bold;
+}
+
+.sidebar .sidebar-section-header {
+    color: @accent-dim;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 8px 8px 2px;
+}
+
+.sidebar .sidebar-button {
+    background-color: transparent;
+    border: none;
+    color: @text-dim;
+    border-radius: 4px;
+    min-width: 20px;
+    min-height: 20px;
+    padding: 2px;
+}
+
+.sidebar .sidebar-button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+}
+
+iconview,
+.view {
+    background-color: @bg-darkest;
+    color: @text-bright;
+}
+
+iconview > child {
+    border-radius: 4px;
+    padding: 4px;
+}
+
+iconview > child:hover {
+    background-color: @bg-mid;
+    outline: 1px solid @border-mid;
+}
+
+iconview > child:selected {
+    background-color: @accent-muted;
+    color: @text-bright;
+    outline: 1px solid @accent-main;
+    border-radius: 4px;
+}
+
+iconview > child:selected label {
+    color: @text-bright;
+}
+
+iconview rubberband,
+.rubberband {
+    background-color: alpha(@accent-muted, 0.25);
+    border: 1px solid @accent-muted;
+    border-radius: 2px;
+}
+
+treeview,
+treeview.view {
+    background-color: @bg-darkest;
+    color: @text-bright;
+    border: none;
+}
+
+treeview:nth-child(even) {
+    background-color: @bg-dark;
+}
+
+treeview:hover {
+    background-color: @bg-mid;
+}
+
+treeview:selected,
+treeview row:selected {
+    background-color: @accent-muted;
+    color: @text-bright;
+}
+
+treeview header button,
+.treeview header button {
+    background-color: @bg-bar;
+    color: @text-dim;
+    border: none;
+    border-right: 1px solid @border-soft;
+    border-bottom: 1px solid @border-mid;
+    border-radius: 0;
+    padding: 2px 8px;
+    min-height: 24px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+treeview header button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+}
+
+treeview header button:checked,
+treeview header button.active {
+    color: @accent-main;
+}
+
+treeview header button .sort-indicator {
+    color: @accent-main;
+}
+
+scrollbar {
+    background-color: @bg-darkest;
+    border: none;
+    width: 8px;
+    height: 8px;
+}
+
+scrollbar trough {
+    background-color: @bg-dark;
+    border-radius: 4px;
+}
+
+scrollbar slider {
+    background-color: @accent-muted;
+    border-radius: 4px;
+    min-width: 6px;
+    min-height: 6px;
+    margin: 1px;
+}
+
+scrollbar slider:hover {
+    background-color: @accent-main;
+}
+
+scrollbar slider:active {
+    background-color: @text-bright;
+}
+
+scrollbar.overlay-indicator {
+    opacity: 0.7;
+}
+
+scrollbar.overlay-indicator:hover {
+    opacity: 1.0;
+}
+
+toolbar,
+.toolbar {
+    background-color: @bg-dark;
+    border-bottom: 1px solid @border-soft;
+    padding: 2px 4px;
+}
+
+toolbar button,
+.toolbar button {
+    background-color: transparent;
+    color: @text-dim;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 2px 6px;
+    min-height: 28px;
+    transition: all 0.15s ease;
+}
+
+toolbar button:hover,
+.toolbar button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+    border-color: @border-soft;
+}
+
+toolbar button:active,
+.toolbar button:active {
+    background-color: @accent-muted;
+    color: @text-dark;
+}
+
+toolbar button:disabled,
+.toolbar button:disabled {
+    color: @accent-dim;
+    opacity: 0.4;
+}
+
+toolbar button:checked,
+.toolbar button:checked {
+    background-color: @bg-mid;
+    color: @accent-main;
+    border-color: @border-mid;
+}
+
+toolbar separator {
+    background-color: @border-mid;
+    min-width: 1px;
+    margin: 4px 2px;
+}
+
+menu,
+.menu,
+popover {
+    background-color: @bg-dark;
+    border: 1px solid @border-mid;
+    border-radius: 4px;
+    padding: 4px 0;
+    box-shadow: none;
+}
+
+menuitem,
+.menu > menuitem,
+popover > contents > modelbutton {
+    background-color: transparent;
+    color: @text-bright;
+    padding: 4px 16px;
+    border-radius: 0;
+    min-height: 24px;
+}
+
+menuitem:hover,
+.menu > menuitem:hover,
+popover > contents > modelbutton:hover {
+    background-color: @accent-muted;
+    color: @text-bright;
+}
+
+menuitem:disabled,
+.menu > menuitem:disabled {
+    color: @text-dim;
+    opacity: 0.5;
+}
+
+menuitem > arrow {
+    color: @text-dim;
+}
+
+menuitem > accel {
+    color: @text-dim;
+    font-size: 11px;
+}
+
+separator,
+menu separator {
+    background-color: @border-soft;
+    min-height: 1px;
+    margin: 3px 0;
+}
+
+menuitem > check,
+menuitem > radio {
+    color: @accent-main;
+}
+
+statusbar,
+.statusbar {
+    background-color: @bg-dark;
+    color: @text-dim;
+    border-top: 1px solid @border-soft;
+    padding: 2px 8px;
+    font-size: 12px;
+    min-height: 22px;
+}
+
+dialog,
+.dialog {
+    background-color: @bg-dark;
+    color: @text-bright;
+    border: 1px solid @border-mid;
+    border-radius: 6px;
+}
+
+dialog .dialog-action-area,
+.dialog-action-area {
+    background-color: @bg-mid;
+    border-top: 1px solid @border-soft;
+    padding: 8px;
+}
+
+dialog button,
+.dialog button {
+    background-color: @bg-raised;
+    color: @text-bright;
+    border: 1px solid @border-mid;
+    border-radius: 4px;
+    padding: 4px 16px;
+    min-height: 28px;
+}
+
+dialog button:hover {
+    background-color: @bg-mid;
+    border-color: @accent-muted;
+}
+
+dialog button.suggested-action,
+button.suggested-action {
+    background-color: @accent-muted;
+    color: @text-bright;
+    border-color: @accent-main;
+    font-weight: bold;
+}
+
+dialog button.suggested-action:hover {
+    background-color: @accent-main;
+    color: @text-dark;
+}
+
+dialog button.destructive-action,
+button.destructive-action {
+    background-color: @bg-dark;
+    color: @accent-main;
+    border-color: @accent-muted;
+}
+
+dialog button.destructive-action:hover {
+    background-color: @accent-muted;
+    color: @text-dark;
+}
+
+progressbar {
+    background-color: @bg-bar;
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+progressbar trough {
+    background-color: @bg-bar;
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+progressbar progress {
+    background-color: @accent-main;
+    border-radius: 4px;
+    min-height: 6px;
+}
+
+notebook {
+    background-color: @bg-darkest;
+}
+
+notebook header,
+notebook tabs {
+    background-color: @bg-dark;
+    border-bottom: 1px solid @border-soft;
+}
+
+notebook tab {
+    background-color: transparent;
+    color: @text-dim;
+    padding: 4px 12px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    min-height: 28px;
+}
+
+notebook tab:hover {
+    background-color: @bg-mid;
+    color: @text-bright;
+}
+
+notebook tab:checked {
+    background-color: @bg-darkest;
+    color: @accent-main;
+    border-bottom-color: @accent-main;
+}
+
+notebook tab button {
+    background-color: transparent;
+    border: none;
+    border-radius: 2px;
+    color: @text-dim;
+    min-width: 16px;
+    min-height: 16px;
+    padding: 1px;
+}
+
+notebook tab button:hover {
+    background-color: @bg-raised;
+    color: @text-bright;
+}
+
+tooltip,
+.tooltip {
+    background-color: @bg-darkest;
+    color: @text-bright;
+    border: 1px solid @border-soft;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    box-shadow: none;
+}
+
+tooltip label,
+.tooltip label {
+    color: @text-bright;
+}
+
+searchbar,
+.search-bar {
+    background-color: @bg-mid;
+    border-bottom: 1px solid @border-soft;
+    padding: 4px 8px;
+}
+
+searchbar entry,
+.search-bar entry {
+    background-color: @bg-dark;
+    color: @text-bright;
+    border: 1px solid @border-mid;
+    border-radius: 4px;
+    padding: 2px 10px;
+    min-height: 26px;
+    caret-color: @accent-main;
+}
+
+searchbar entry:focus {
+    border-color: @accent-main;
+}
+
+check,
+radio {
+    background-color: @bg-raised;
+    border: 1px solid @border-mid;
+    border-radius: 3px;
+    min-width: 14px;
+    min-height: 14px;
+}
+
+check:checked,
+radio:checked {
+    background-color: @accent-muted;
+    border-color: @accent-main;
+    color: @text-bright;
+}
+
+check:hover,
+radio:hover {
+    border-color: @accent-muted;
+}
+
+spinner {
+    color: @accent-main;
+}
+
+iconview entry,
+treeview entry {
+    background-color: @bg-mid;
+    color: @text-bright;
+    border: 1px solid @accent-main;
+    border-radius: 3px;
+    padding: 1px 4px;
+    caret-color: @accent-main;
+    selection-background-color: @accent-muted;
+    selection-color: @text-bright;
+}
+
+paned separator {
+    background-color: @border-soft;
+    min-width: 4px;
+    min-height: 4px;
+    border: none;
+}
+
+paned separator:hover {
+    background-color: @accent-muted;
+}

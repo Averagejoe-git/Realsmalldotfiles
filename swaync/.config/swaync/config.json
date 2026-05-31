@@ -1,0 +1,141 @@
+{
+    "positionX": "right",
+    "positionY": "bottom",
+    "layer": "overlay",
+    "layer-shell": true,
+    "cssPriority": "application",
+    "control-center-layer": "overlay",
+    "control-center-positionX": "right",
+    "control-center-positionY": "bottom",
+    "control-center-width": 380,
+    "control-center-height": 800,
+    "control-center-margin-top": 0,
+    "control-center-margin-bottom": 0,
+    "control-center-margin-right": 6,
+    "control-center-margin-left": 0,
+    "fit-to-screen": false,
+    "notification-window-width": 380,
+    "notification-icon-size": 48,
+    "notification-body-image-height": 120,
+    "notification-body-image-width": 200,
+    "notification-inline-replies": false,
+    "notification-2fa-action": true,
+    "timeout": 8,
+    "timeout-low": 5,
+    "timeout-critical": 0,
+    "transition-time": 150,
+    "hide-on-clear": false,
+    "hide-on-action": true,
+    "image-visibility": "when-available",
+    "keyboard-shortcuts": true,
+    "script-fail-notify": true,
+    "scripts": {},
+    "notification-visibility": {},
+    "widgets": [
+        "menubar",
+        "buttons-grid",
+        "volume",
+        "mpris",
+        "title",
+        "notifications"
+    ],
+    "widget-config": {
+        "title": {
+            "text": "Notifications",
+            "clear-all-button": true,
+            "button-text": "Clear All"
+        },
+        "dnd": {
+            "text": "Do Not Disturb"
+        },
+        "volume": {
+            "label": "󰕾"
+        },
+        "mpris": {
+            "image-size": 64,
+            "image-radius": 6
+        },
+        "menubar": {
+            "menu#power": {
+                "label": "⏻",
+                "position": "right",
+                "actions": [
+                    { "label": "  Shut Down",  "command": "systemctl poweroff" },
+                    { "label": "  Reboot",     "command": "systemctl reboot" },
+                    { "label": "  Suspend",    "command": "systemctl suspend" },
+                    { "label": "  Lock",       "command": "loginctl lock-session" }
+                ]
+            },
+            "menu#settings": {
+                "label": "⚙",
+                "position": "right",
+                "actions": [
+                    { "label": "  Settings",      "command": "env XDG_CURRENT_DESKTOP=gnome gnome-control-center" },
+                    { "label": "  Wallpaper",     "command": "waypaper" },
+                    { "label": "  Display",       "command": "wdisplays" }
+                ]
+            },
+            "buttons#quicklinks": {
+                "position": "left",
+                "actions": [
+                    { "label": "  Files",      "command": "thunar" },
+                    { "label": "  Terminal",   "command": "kitty" },
+                    { "label": "  Browser",    "command": "thorium-browser" }
+                ]
+            }
+        },
+        "buttons-grid": {
+            "buttons-per-row": 4,
+            "actions": [
+                {
+                    "label": "󰤨",
+                    "type": "toggle",
+                    "command": "~/.config/swaync/scripts/toggle-wifi.sh",
+                    "update-command": "nmcli radio wifi | grep -q enabled && echo true || echo false",
+                    "active": false
+                },
+                {
+                    "label": "󰂯",
+                    "type": "toggle",
+                    "command": "~/.config/swaync/scripts/toggle-bluetooth.sh",
+                    "update-command": "bluetoothctl show | grep -q 'Powered: yes' && echo true || echo false",
+                    "active": false
+                },
+                {
+                    "label": "󰕾",
+                    "type": "toggle",
+                    "command": "~/.config/swaync/scripts/toggle-mute.sh",
+                    "update-command": "pactl get-sink-mute @DEFAULT_SINK@ | grep -q 'no' && echo true || echo false",
+                    "active": true
+                },
+                {
+                    "label": "󰌿",
+                    "type": "toggle",
+                    "command": "swaync-client -d -sw",
+                    "update-command": "swaync-client --get-dnd",
+                    "active": false
+                },
+                {
+                    "label": "󰍹",
+                    "type": "normal",
+                    "command": "wdisplays"
+                },
+                {
+                    "label": "󰐋",
+                    "type": "normal",
+                    "command": "playerctl play-pause"
+                },
+                {
+                    "label": "󰙊",
+                    "type": "normal",
+                    "command": "grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png"
+                },
+                {
+                    "label": "󰈞",
+                    "type": "normal",
+                    "command": "cliphist list | rofi -dmenu -theme ~/.config/rofi/themes/chudbaru.rasi | cliphist decode | wl-copy"
+                }
+            ]
+        }
+    }
+}
