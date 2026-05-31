@@ -3,103 +3,116 @@
 # Dotfiles Bootstrap Installer
 # Usage on a fresh machine:
 #   bash <(curl -s https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/install.sh)
+#
+# Dry run (preview only, no changes):
+#   bash install.sh --dry-run
 # =============================================================================
 
 set -e
 
 REPO="https://github.com/YOUR_USERNAME/dotfiles.git"
 DOTFILES_DIR="$HOME/dotfiles"
+DRY_RUN=false
+
+[[ "$1" == "--dry-run" ]] && DRY_RUN=true
 
 # ── Colors ────────────────────────────────────────────────────────────────────
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
 RED='\033[0;31m'
 RESET='\033[0m'
 
-info()    { echo -e "${BLUE}[info]${RESET}  $*"; }
-success() { echo -e "${GREEN}[ok]${RESET}    $*"; }
-warn()    { echo -e "${YELLOW}[warn]${RESET}  $*"; }
-error()   { echo -e "${RED}[error]${RESET} $*"; exit 1; }
+info()    { echo -e "${BLUE}[info]${RESET}   $*"; }
+success() { echo -e "${GREEN}[ok]${RESET}     $*"; }
+warn()    { echo -e "${YELLOW}[warn]${RESET}   $*"; }
+dryrun()  { echo -e "${CYAN}[dry-run]${RESET} would link: $*"; }
+error()   { echo -e "${RED}[error]${RESET}  $*"; exit 1; }
+
+$DRY_RUN && warn "DRY RUN MODE — no files will be changed."
+echo ""
 
 # ── 1. Clone or update the repo ───────────────────────────────────────────────
-if [[ -d "$DOTFILES_DIR/.git" ]]; then
-  info "Dotfiles repo already exists — pulling latest changes..."
-  git -C "$DOTFILES_DIR" pull --ff-only
-else
-  info "Cloning dotfiles repo to $DOTFILES_DIR ..."
-  git clone "$REPO" "$DOTFILES_DIR"
+if ! $DRY_RUN; then
+  if [[ -d "$DOTFILES_DIR/.git" ]]; then
+    info "Dotfiles repo already exists — pulling latest..."
+    git -C "$DOTFILES_DIR" pull --ff-only
+  else
+    info "Cloning dotfiles repo to $DOTFILES_DIR ..."
+    git clone "$REPO" "$DOTFILES_DIR"
+  fi
 fi
 
-# ── 2. Helper: create a symlink (overwrites silently) ─────────────────────────
+# ── 2. Helper: create a symlink ───────────────────────────────────────────────
 link() {
   local src="$1"
   local dest="$2"
-  mkdir -p "$(dirname "$dest")"
-  ln -sf "$src" "$dest"
-  success "Linked  $dest  →  $src"
+  if $DRY_RUN; then
+    dryrun "$dest  →  $src"
+  else
+    mkdir -p "$(dirname "$dest")"
+    ln -sf "$src" "$dest"
+    success "Linked  $dest  →  $src"
+  fi
 }
 
 # ── 3. Walk every topic folder ────────────────────────────────────────────────
-#
-# Expected layout:
-#   ~/dotfiles/<topic>/.config/<app>/...     → ~/.config/<app>/...
-#   ~/dotfiles/<topic>/.local/...            → ~/.local/...
-#   ~/dotfiles/<topic>/.themes/...           → ~/.themes/...
-#   ~/dotfiles/<topic>/.<file>               → ~/.<file>          (top-level dotfiles)
-#   ~/dotfiles/<topic>/*.theme               → ~/.themes/<file>   (GTK theme files)
-#
 for topic_dir in "$DOTFILES_DIR"/*/; do
+  # Skip .git
+  [[ "$(basename "$topic_dir")" == ".git" ]] && continue
+
   topic=$(basename "$topic_dir")
   info "Processing topic: $topic"
 
-  # ── .config/** ─────────────────────────────────────────────────────────────
+  # .config/** → ~/.config/
   if [[ -d "$topic_dir/.config" ]]; then
     while IFS= read -r -d '' src; do
-      rel="${src#"$topic_dir/"}"          # e.g. .config/nvim/init.lua
-      dest="$HOME/$rel"
-      link "$src" "$dest"
+      rel="${src#"$topic_dir/"}"
+      link "$src" "$HOME/$rel"
     done < <(find "$topic_dir/.config" -type f -print0)
   fi
 
-  # ── .local/** ──────────────────────────────────────────────────────────────
+  # .local/** → ~/.local/
   if [[ -d "$topic_dir/.local" ]]; then
     while IFS= read -r -d '' src; do
       rel="${src#"$topic_dir/"}"
-      dest="$HOME/$rel"
-      link "$src" "$dest"
+      link "$src" "$HOME/$rel"
+      # Make scripts executable
+      [[ "$src" == *.sh ]] && { $DRY_RUN || chmod +x "$src"; }
     done < <(find "$topic_dir/.local" -type f -print0)
   fi
 
-  # ── .themes/** (already in a .themes subdir) ───────────────────────────────
+  # .themes/** → ~/.themes/
   if [[ -d "$topic_dir/.themes" ]]; then
     while IFS= read -r -d '' src; do
       rel="${src#"$topic_dir/"}"
-      dest="$HOME/$rel"
-      link "$src" "$dest"
+      link "$src" "$HOME/$rel"
     done < <(find "$topic_dir/.themes" -type f -print0)
   fi
 
-  # ── Bare *.theme files → ~/.themes/<filename> ──────────────────────────────
+  # bare *.theme files → ~/.themes/
   while IFS= read -r -d '' src; do
     filename=$(basename "$src")
-    dest="$HOME/.themes/$filename"
-    mkdir -p "$HOME/.themes"
-    link "$src" "$dest"
+    $DRY_RUN || mkdir -p "$HOME/.themes"
+    link "$src" "$HOME/.themes/$filename"
   done < <(find "$topic_dir" -maxdepth 1 -name "*.theme" -print0)
 
-  # ── Top-level dotfiles (.<name> files directly in topic dir) ───────────────
+  # top-level dotfiles (.<file>) → ~/
   while IFS= read -r -d '' src; do
     filename=$(basename "$src")
-    dest="$HOME/$filename"
-    link "$src" "$dest"
+    link "$src" "$HOME/$filename"
   done < <(find "$topic_dir" -maxdepth 1 -name ".*" -not -name ".git" -type f -print0)
 
 done
 
 echo ""
-success "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-success " Dotfiles installed successfully! 🎉 "
-success "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo ""
-warn "You may need to restart your shell or log out/in for all changes to take effect."
+if $DRY_RUN; then
+  warn "Dry run complete — nothing was changed. Run without --dry-run to apply."
+else
+  success "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  success " Dotfiles installed successfully! 🎉  "
+  success "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  warn "Restart your shell or log out/in for all changes to take effect."
+fi
