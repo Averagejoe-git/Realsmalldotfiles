@@ -6,7 +6,7 @@
 
 set -e
 
-REPO="https://github.com/YOUR_USERNAME/dotfiles.git"
+REPO="https://github.com/Averagejoe-git/dotfiles.git"
 DOTFILES_DIR="$HOME/dotfiles"
 DRY_RUN=false
 
