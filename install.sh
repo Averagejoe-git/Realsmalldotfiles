@@ -33,7 +33,38 @@ error()   { echo -e "${RED}[error]${RESET}  $*"; exit 1; }
 $DRY_RUN && warn "DRY RUN MODE — no files will be changed."
 echo ""
 
-# ── 1. Clone or update the repo ───────────────────────────────────────────────
+# ── 1. Install packages ───────────────────────────────────────────────────────
+PACKAGES=(
+  nwg-look
+  thunar
+  hyprlock
+  hyprshot
+  swaync
+)
+
+if ! $DRY_RUN; then
+  # Install yay if not already present
+  if ! command -v yay &>/dev/null; then
+    info "Installing yay (AUR helper)..."
+    sudo pacman -S --needed git base-devel
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    (cd /tmp/yay && makepkg -si --noconfirm)
+    rm -rf /tmp/yay
+    success "yay installed."
+  else
+    success "yay already installed — skipping."
+  fi
+
+  info "Installing packages..."
+  sudo pacman -S --needed "${PACKAGES[@]}"
+else
+  info "Would install yay (if not present)"
+  info "Would install packages: ${PACKAGES[*]}"
+fi
+
+echo ""
+
+# ── 2. Clone or update the repo ──────────────────────────────────────────────
 if ! $DRY_RUN; then
   if [[ -d "$DOTFILES_DIR/.git" ]]; then
     info "Dotfiles repo already exists — pulling latest..."
@@ -44,7 +75,7 @@ if ! $DRY_RUN; then
   fi
 fi
 
-# ── 2. Helper: create a symlink ───────────────────────────────────────────────
+# ── 3. Helper: create a symlink ───────────────────────────────────────────────
 link() {
   local src="$1"
   local dest="$2"
@@ -57,7 +88,7 @@ link() {
   fi
 }
 
-# ── 3. Walk every topic folder ────────────────────────────────────────────────
+# ── 4. Walk every topic folder ────────────────────────────────────────────────
 for topic_dir in "$DOTFILES_DIR"/*/; do
   # Skip .git
   [[ "$(basename "$topic_dir")" == ".git" ]] && continue
