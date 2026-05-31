@@ -2,10 +2,6 @@
 # =============================================================================
 # Dotfiles Bootstrap Installer
 # Usage on a fresh machine:
-#   bash <(curl -s https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/install.sh)
-#
-# Dry run (preview only, no changes):
-#   bash install.sh --dry-run
 # =============================================================================
 
 set -e
